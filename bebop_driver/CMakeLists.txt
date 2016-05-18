@@ -30,6 +30,7 @@ generate_dynamic_reconfigure_options(
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(AVCODEC REQUIRED libavcodec)
 pkg_check_modules(AVFORMAT REQUIRED libavformat)
+pkg_check_modules(AVUTIL REQUIRED libavutil)
 pkg_check_modules(SWSCALE REQUIRED libswscale)
 
 # TODO: Should we state all catkin depends?
@@ -37,7 +38,7 @@ catkin_package(
    INCLUDE_DIRS include
    LIBRARIES libbebop bebop_driver_nodelet
    CATKIN_DEPENDS bebop_msgs bebop_description roscpp nodelet camera_info_manager image_transport nav_msgs std_msgs tf2 tf2_ros tf2_geometry_msgs dynamic_reconfigure
-   DEPENDS system_lib libavcodec libavformat libswscale
+   DEPENDS system_lib libavcodec libavformat libavutil libswscale
 )
 
 # roslint
@@ -81,12 +82,14 @@ include_directories(
   ${ARDRONESDK3_PATH}/include
   ${AVCODEC_INCLUDE_DIRS}
   ${AVFORMAT_INCLUDE_DIRS}
+  ${AVUTIL_INCLUDE_DIRS}
   ${SWSCALE_INCLUDE_DIRS}
 )
 
 link_directories(${ARDRONESDK3_PATH}/lib
   ${AVCODEC_LIBRARY_DIRS}
   ${AVFORMAT_LIBRARY_DIRS}
+  ${AVUTIL_LIBRARY_DIRS}
   ${SWSCALE_LIBRARY_DIRS}
 )
 
@@ -98,6 +101,7 @@ target_link_libraries(libbebop
   ardiscovery
   ${AVCODEC_LIBRARIES}
   ${AVFORMAT_LIBRARIES}
+  ${AVUTIL_LIBRARIES}
   ${SWSCALE_LIBRARIES}
 )
 add_dependencies(libbebop ARSDKBuildUtils)
